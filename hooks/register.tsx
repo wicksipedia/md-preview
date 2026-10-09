@@ -86,7 +86,7 @@ let lastMtime = 0
 let inBrowser = false
 
 /** A self-contained page that renders `md` with GitHub styles, highlighting and mermaid. */
-export function previewHtml(path: string, md: string) {
+export function previewHtml(path: string, md: string, assets: string) {
   const dir = path.slice(0, path.lastIndexOf('/') + 1)
   const hasMermaid = /^```mermaid/m.test(md)
   const data = JSON.stringify(md).replace(/</g, '\\u003c')
@@ -94,17 +94,17 @@ export function previewHtml(path: string, md: string) {
   return `<!doctype html><html><head><meta charset="utf-8">
 <title>${basename(path).replace(/</g, '&lt;')}</title>
 <base href="${toHref(dir)}">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.5.1/github-markdown.min.css">
-<link rel="stylesheet" media="(prefers-color-scheme: light)" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
-<link rel="stylesheet" media="(prefers-color-scheme: dark)" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="${assets}/github-markdown.min.css">
+<link rel="stylesheet" media="(prefers-color-scheme: light)" href="${assets}/github.min.css">
+<link rel="stylesheet" media="(prefers-color-scheme: dark)" href="${assets}/github-dark.min.css">
 <style>
 :root { --bg: #fff } @media (prefers-color-scheme: dark) { :root { --bg: #0d1117 } }
 body { background: var(--bg); margin: 0 }
 .markdown-body { box-sizing: border-box; max-width: 900px; margin: 0 auto; padding: 32px 24px }
 </style></head><body><article class="markdown-body" id="doc"></article>
-<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-${hasMermaid ? '<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>' : ''}
+<script src="${assets}/marked.min.js"></script>
+<script src="${assets}/highlight.min.js"></script>
+${hasMermaid ? `<script src="${assets}/mermaid.min.js"></script>` : ''}
 <script>
 const key = 'scroll:' + location.pathname
 const doc = document.getElementById('doc')
@@ -127,7 +127,7 @@ addEventListener('scroll', () => sessionStorage.setItem(key, scrollY))
 
 async function writeHtml($: EngineInterface, path: string) {
   const md = await $.fs.read(path).then(t => t as string, () => `_Cannot read ${path}_`)
-  await $.fs.write(htmlPath(path), previewHtml(path, md))
+  await $.fs.write(htmlPath(path), previewHtml(path, md, toHref(`${$.plugin.root}/assets`)))
 }
 
 async function btty($: EngineInterface, ...args: string[]) {

@@ -30,7 +30,7 @@ While the preview is open, the mod checks the file once a second. When the file 
 
 ## Where the preview shows
 
-In bigtty, the preview opens in a browser pane beside the terminal. It loads its styles and scripts from jsDelivr and cdnjs, so it needs a network connection.
+In bigtty, the preview opens in a browser pane beside the terminal. The page works offline: its styles and scripts ship in `assets/`.
 
 Without bigtty, the preview opens in a Claude Code side pane. That pane draws markdown with the terminal's own renderer: headings, lists, tables and code, but no images or diagrams.
 
@@ -50,6 +50,17 @@ claude --plugin-dir .
 claude plugin validate .
 claude plugin test .
 ```
+
+## Bundled assets
+
+`assets/` holds copies of these files:
+
+- github-markdown-css 5.5.1
+- highlight.js 11.9.0, with the `github` and `github-dark` styles
+- marked 12.0.2
+- mermaid 10.9.1
+
+To update one, download the new version over the old file and change the version here.
 
 ## License
 
