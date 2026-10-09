@@ -1,0 +1,13 @@
+{
+  "name": "md-preview",
+  "description": "Rendered markdown previews for Claude Code",
+  "owner": {
+    "name": "Matt Wicks"
+  },
+  "plugins": [
+    {
+      "name": "md-preview",
+      "source": "./"
+    }
+  ]
+}

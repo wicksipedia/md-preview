@@ -1,0 +1,8 @@
+{
+  "name": "md-preview",
+  "version": "0.1.0",
+  "description": "Click a markdown file link in Claude Code to preview it rendered",
+  "author": { "name": "Matt Wicks" },
+  "repository": "https://github.com/wicksipedia/md-preview",
+  "types": "./types/index.d.ts"
+}
