@@ -4,5 +4,6 @@
   "description": "Click a markdown file link in Claude Code to preview it rendered",
   "author": { "name": "Matt Wicks" },
   "repository": "https://github.com/wicksipedia/md-preview",
+  "license": "MIT",
   "types": "./types/index.d.ts"
 }
