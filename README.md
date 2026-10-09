@@ -51,6 +51,11 @@ claude plugin validate .
 claude plugin test .
 ```
 
+`claude plugin test .` runs two kinds of test:
+
+- Unit tests (`hooks/linkify.test.ts`, `hooks/preview.test.ts`) check the link and page-building functions on their own.
+- Integration tests (`hooks/integration.test.ts`) load the whole mod into the Claude Code test engine. Fake hooks stand in for the disk, btty and the side pane. The tests run `/md`, mount the reply, pane and prompt-row components, press links, and move a fake clock to check live reload.
+
 ## Bundled assets
 
 `assets/` holds copies of these files:
@@ -60,7 +65,14 @@ claude plugin test .
 - marked 12.0.2
 - mermaid 10.9.1
 
-To update one, download the new version over the old file and change the version here.
+`scripts/update-assets.sh` holds the pinned versions and downloads each file from jsDelivr. To update a library:
+
+1. Change its version at the top of `scripts/update-assets.sh`.
+2. Run `scripts/update-assets.sh`.
+3. Change the version in the list above.
+4. Run `claude plugin test .`, then open a preview with code, a table and a Mermaid diagram to check it still renders.
+
+To check that the files in `assets/` match the pinned versions, run `scripts/update-assets.sh --check`.
 
 ## License
 
